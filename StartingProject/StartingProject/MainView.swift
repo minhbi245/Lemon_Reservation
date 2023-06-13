@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct MainView: View {
+    @StateObject var model = Model()
+    @State var tabSelection = 0
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView(selection: $model.tabViewSelectedIndex) {
+            LocationView()
+        }
     }
 }
 

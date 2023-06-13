@@ -8,13 +8,35 @@
 import SwiftUI
 
 struct LocationView: View {
+    @EnvironmentObject var model: Model
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            LittleLemonLogo()
+                .padding(.top, 50)
+            Text(model.displayingReservationForm ? "Reservaion Details" : "Select a location")
+                .padding([.leading, .trailing], 40)
+                .padding([.top, .bottom], 8)
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(20)
+            
+            NavigationView {
+                List(model.restaurants, id: \.self) { restaurant in
+                    NavigationLink(destination: ReservationForm(restaurant)) {
+                        RestaurantView(restaurant)
+                    }
+                    .navigationTitle("")
+                    .navigationBarHidden(true)
+                }
+                .scrollContentBackground(.hidden)
+                
+            }
+        }
+        .padding()
     }
 }
 
 struct LocationView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationView()
+        LocationView().environmentObject(Model())
     }
 }
